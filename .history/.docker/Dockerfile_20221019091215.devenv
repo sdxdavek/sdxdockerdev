@@ -1,0 +1,34 @@
+FROM gcc:10.1
+
+# Install build tools
+RUN \
+	apt-get -qq update \
+	&& \
+	apt-get install -y \
+		git \
+		cmake \
+		cmake-curses-gui \
+		doxygen \
+		graphviz \
+        bison \
+		yasm \
+		libx11-dev \
+		libxi-dev \
+		fltk1.3 \
+		libxft-dev \
+		libxinerama-dev \
+		libglu1-mesa-dev \
+		libxcursor-dev \
+		libasound2-dev \
+		libudev-dev 
+
+# Add build user, add build user to docker group, & add to sudo group.
+RUN useradd -s /bin/bash -m vscode \
+    && \ 
+    groupadd docker \
+    && \
+    usermod -aG docker vscode \
+    && \
+    usermode -aG sudo vscode
+
+USER vscode

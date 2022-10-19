@@ -1,0 +1,23 @@
+FROM gcc:10.1
+
+# Install general build tools
+RUN \
+	apt-get -qq update \
+	&& \
+	apt-get install -y \
+		git \
+		cmake \
+		cmake-curses-gui \
+		doxygen \
+		graphviz 
+
+# Add build user, add build user to docker group, & add to sudo group.
+RUN useradd -s /bin/bash -m vscode \
+    && \ 
+    groupadd docker \
+    && \
+    usermod -aG docker vscode \
+    && \
+    usermode -aG sudo vscode
+
+USER vscode
